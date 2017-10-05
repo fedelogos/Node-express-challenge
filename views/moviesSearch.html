@@ -1,0 +1,86 @@
+
+{% extends 'layout.html' %}
+{% block body %}
+    <div class="wrapper">
+
+        <!-- Header section -->
+        <header class="header-wrapper">
+            <div class="container">
+                <!-- Logo link-->
+                <a href='index.html' class="logo">
+                    <img alt='logo' src="images/logo.png">
+                </a>
+
+                <!-- Main website navigation-->
+                <nav id="navigation-box">
+                    <!-- Toggle for mobile menu mode -->
+                    <a href="#" id="navigation-toggle">
+                        <span class="menu-icon">
+                            <span class="icon-toggle" role="button" aria-label="Toggle Navigation">
+                              <span class="lines"></span>
+                            </span>
+                        </span>
+                    </a>
+
+                    <!-- Link navigation -->
+                    <ul id="navigation">
+                        <li>&nbsp;</li>
+                    </ul>
+                </nav>
+
+                <!-- Additional header buttons / Auth and direct link to booking-->
+            </div>
+        </header>
+     <!-- Search bar -->
+        <div class="search-wrapper">
+            <div class="container container--add">
+                <form id='search-form' method='get' class="search" action="/filterBySearch">
+                    <input type="text" class="search__field" placeholder="Search" name="searchInput">
+                    <select name="sorting_item" id="search-sort" class="search__sort" tabindex="0">
+                        <option value="1" selected='selected'>By title</option>
+                        <option value="2">By year</option>
+                        <option value="3">By producer</option>
+                    </select>
+                    <button type='submit' class="btn btn-md btn--danger search__button">search a movie</button>
+                </form>
+            </div>
+        </div>
+ <!-- renders the movies searched by the user -->
+	      <section class="container">
+            <h2 id='target' class="page-heading heading--outcontainer">FILTERED RESULTS</h2>
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Movie variant with time -->
+                        {% for i in range(0, movieBySearch.length) %}
+                        {% if i % 4 == 0 or i % 4 == 1 %}
+						 <div class="movie movie--test movie--test--dark movie--test--left"> 				
+						{% else %}
+						<div class="movie movie--test movie--test--dark movie--test--right">
+						{% endif %}
+                                <div class="movie__images">
+                                    <a href="{{movieBySearch[i].id}}" class="movie-beta__link">
+                                        <img alt='' src="{{movieBySearch[i].large_cover_image}}">
+                                    </a>
+                                </div>
+                                <div class="movie__info">
+                                    <a href='movie-page-full.html' class="movie__title">{{movieBySearch[i].title}} {{movieBySearch[i].year}} </a>
+
+                                    <p class="movie__time">{{movieBySearch[i].runtime}}</p>
+
+                                    <p class="movie__option"><a href="#">{{movieBySearch[i].genres[0]}}</a> | <a href="#">{{movieBySearch[i].genres[1]}}</a> | <a href="#">{{movieBySearch[i].genres[2]}}</a></p>
+
+                                    <div class="movie__rate">
+                                        <div class="score"></div>
+                                        <span class="movie__rating">{{movieBySearch[i].rating}}</span>
+                                    </div>
+                                </div>
+                            </div>
+						{% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>   
+{% endblock %}
+

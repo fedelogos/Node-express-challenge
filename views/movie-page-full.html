@@ -1,0 +1,308 @@
+<!doctype html>
+<html>
+<head>
+	<!-- Basic Page Needs -->
+        <meta charset="utf-8">
+        <title>AMovie - Movie page</title>
+        <meta name="description" content="A Template by Gozha.net">
+        <meta name="keywords" content="HTML, CSS, JavaScript">
+        <meta name="author" content="Gozha.net">
+
+    <!-- Mobile Specific Metas-->
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="telephone=no" name="format-detection">
+
+    <!-- Fonts -->
+        <!-- Font awesome - icon font -->
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <!-- Roboto -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+
+    <!-- Stylesheets -->
+        <!-- jQuery UI -->
+        <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
+        <!-- Mobile menu -->
+        <link href="css/gozha-nav.css" rel="stylesheet" />
+        <!-- Select -->
+        <link href="css/external/jquery.selectbox.css" rel="stylesheet" />
+        <!-- Swiper slider -->
+        <link href="css/external/idangerous.swiper.css" rel="stylesheet" />
+        <!-- Magnific-popup -->
+        <link href="css/external/magnific-popup.css" rel="stylesheet" />
+        <!-- Custom -->
+        <link href="css/style.css?v=1" rel="stylesheet" />
+        <!-- Modernizr -->
+        <script src="js/external/modernizr.custom.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+
+        <!-- Header section -->
+        <header class="header-wrapper">
+            <div class="container">
+                <!-- Logo link-->
+                <a href='index.html' class="logo">
+                    <img alt='logo' src="images/logo.png">
+                </a>
+
+                <!-- Main website navigation-->
+                <nav id="navigation-box">
+                    <!-- Toggle for mobile menu mode -->
+                    <a href="#" id="navigation-toggle">
+                        <span class="menu-icon">
+                            <span class="icon-toggle" role="button" aria-label="Toggle Navigation">
+                              <span class="lines"></span>
+                            </span>
+                        </span>
+                    </a>
+
+                    <!-- Link navigation -->
+                    <ul id="navigation">
+                        <li>&nbsp;</li>
+                    </ul>
+                </nav>
+
+                <!-- Additional header buttons / Auth and direct link to booking-->
+            </div>
+        </header>
+
+        <!-- Search bar -->
+        <div class="search-wrapper">
+            <div class="container container--add">
+                <form id='search-form' method='get' class="search" action="/filterBySearch">
+                    <input type="text" class="search__field" placeholder="Search" name="searchInput">
+                    <select name="sorting_item" id="search-sort" class="search__sort" tabindex="0">
+                        <option value="1" selected='selected'>By title</option>
+                        <option value="2">By year</option>
+                        <option value="3">By producer</option>
+                    </select>
+                    <button type='submit' class="btn btn-md btn--danger search__button">search a movie</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <section class="container">
+            <div class="col-sm-12">
+                <div class="movie">
+                    <h2 class="page-heading">{{movieById.title}}</h2>
+                    <div class="movie__info">
+                        <div class="col-sm-4 col-md-3 movie-mobile">
+                            <div class="movie__images">
+                                <span class="movie__rating">5.0</span>
+                                <img alt='' src="{{movieById.large_cover_image}}">
+                            </div>
+                            <div class="movie__rate">Your vote: <div id='score' class="score"></div></div>
+                        </div>
+                    <div class="col-sm-8 col-md-9">
+                            <p class="movie__time">{{movieById.runtime}}</p>
+                            <p class="movie__option"><strong>{{movieById.year}}</strong><a href="#"></a></p>
+                            <p class="movie__option"><strong>Category: </strong><a href="#">{{movieById.genres[0]}}</a>, <a href="#">{{movieById.genres[1]}}</a></p>
+                            <p class="movie__option"><strong>Release date: </strong>{{movieById.year}}</p>
+                            <p class="movie__option"><strong>Actors: </strong><a href="#">{{movieById.genres[0]}}</a>, <a href="#">{{movieById.cast[0].name}}</a>, <a href="#">{{movieById.cast[1].name}}</a>, <a href="#">{{movieById.cast[2].name}}</a>, <a href="#">{{movieById.cast[3].name}}</a>, <a href="#">{{movieById.cast[4].name}}</a>, <a href="#">{{movieById.cast[5].name}}</a>, <a href="#">{{movieById.cast[6].name}}</a>, <a href="#">{{movieById.cast[7].name}}</a> <a href="#">...</a></p>
+                            <p class="movie__option"><strong>Box office: </strong><a href="#">$1 017 003 568</a></p>
+
+                            <div class="movie__btns movie__btns--full">
+                                <a href="#" class="watchlist">Add to watchlist</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <h2 class="page-heading">The plot</h2>
+
+                    <p class="movie__describe">{{movieById.description_intro}}</p>
+
+                    <h2 class="page-heading">photos &amp; videos</h2>
+
+                    <div class="movie__media">
+                        <div class="movie__media-switch">
+                            <a href="#" class="watchlist list--photo" data-filter='media-photo'>3 photos</a>
+                            {% if movieById.yt_trailer_code.length %}
+                            <a href="#" class="watchlist list--video" data-filter='media-video'>1 videos</a>
+                            {% endif %}
+                        </div>
+
+                        <div class="swiper-container">
+                          <div class="swiper-wrapper">
+                              <!--First Slide-->
+                              <div class="swiper-slide media-video">
+                                <a href='https://www.youtube.com/watch?v={{movieById.yt_trailer_code}}' class="movie__media-item ">
+                                     <img alt='' src="https://img.youtube.com/vi/{{movieById.yt_trailer_code}}/hqdefault.jpg">
+                                </a>
+                              </div>
+
+                              <!--Third Slide-->
+                              <div class="swiper-slide media-photo">
+                                    <a href='{{movieById.large_screenshot_image1}}' class="movie__media-item">
+                                        <img alt='' src="{{movieById.medium_screenshot_image1}}">
+                                     </a>
+                              </div>
+
+                              <!--Four Slide-->
+                              <div class="swiper-slide media-photo">
+                                    <a href='{{movieById.large_screenshot_image2}}' class="movie__media-item">
+                                        <img alt='' src="{{movieById.medium_screenshot_image2}}">
+                                     </a>
+                              </div>
+
+                              <!--Slide-->
+                              <div class="swiper-slide media-photo">
+                                    <a href='{{movieById.large_screenshot_image3}}' class="movie__media-item">
+                                        <img alt='' src="{{movieById.medium_screenshot_image3}}">
+                                     </a>
+                              </div>
+
+                              <!--Slide-->
+                              <div class="swiper-slide media-photo">
+                                    <a href='{{movieById.large_screenshot_image1}}' class="movie__media-item">
+                                        <img alt='' src="{{movieById.medium_screenshot_image1}}">
+                                     </a>
+                              </div>
+
+                              <!--Slide-->
+                              <div class="swiper-slide media-photo">
+                                    <a href='{{movieById.large_screenshot_image2}}' class="movie__media-item">
+                                        <img alt='' src="{{movieById.medium_screenshot_image2}}">
+                                     </a>
+                              </div>
+
+                              <!--Slide-->
+                              <div class="swiper-slide media-photo">
+                                    <a href='{{movieById.large_screenshot_image3}}' class="movie__media-item">
+                                        <img alt='' src="{{movieById.medium_screenshot_image3}}">
+                                     </a>
+                              </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <div class="clearfix"></div>
+
+        <footer class="footer-wrapper">
+            <section class="container">
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="#" class="nav-link__item">Cities</a></li>
+                        <li><a href="movie-list-left.html" class="nav-link__item">Movies</a></li>
+                        <li><a href="trailer.html" class="nav-link__item">Trailers</a></li>
+                        <li><a href="rates-left.html" class="nav-link__item">Rates</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="coming-soon.html" class="nav-link__item">Coming soon</a></li>
+                        <li><a href="cinema-list.html" class="nav-link__item">Cinemas</a></li>
+                        <li><a href="offers.html" class="nav-link__item">Best offers</a></li>
+                        <li><a href="news-left.html" class="nav-link__item">News</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="#" class="nav-link__item">Terms of use</a></li>
+                        <li><a href="gallery-four.html" class="nav-link__item">Gallery</a></li>
+                        <li><a href="contact.html" class="nav-link__item">Contacts</a></li>
+                        <li><a href="page-elements.html" class="nav-link__item">Shortcodes</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <div class="footer-info">
+                        <p class="heading-special--small">A.Movie<br><span class="title-edition">in the social media</span></p>
+
+                        <div class="social">
+                            <a href='#' class="social__variant fa fa-facebook"></a>
+                            <a href='#' class="social__variant fa fa-twitter"></a>
+                            <a href='#' class="social__variant fa fa-vk"></a>
+                            <a href='#' class="social__variant fa fa-instagram"></a>
+                            <a href='#' class="social__variant fa fa-tumblr"></a>
+                            <a href='#' class="social__variant fa fa-pinterest"></a>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <p class="copy">&copy; A.Movie, 2013. All rights reserved. Done by Olia Gozha</p>
+                    </div>
+                </div>
+            </section>
+        </footer>
+    </div>
+
+    <!-- open/close -->
+        <div class="overlay overlay-hugeinc">
+
+            <section class="container">
+
+                <div class="col-sm-4 col-sm-offset-4">
+                    <button type="button" class="overlay-close">Close</button>
+                    <form id="login-form" class="login" method='get' novalidate=''>
+                        <p class="login__title">sign in <br><span class="login-edition">welcome to A.Movie</span></p>
+
+                        <div class="social social--colored">
+                                <a href='#' class="social__variant fa fa-facebook"></a>
+                                <a href='#' class="social__variant fa fa-twitter"></a>
+                                <a href='#' class="social__variant fa fa-tumblr"></a>
+                        </div>
+
+                        <p class="login__tracker">or</p>
+
+                        <div class="field-wrap">
+                        <input type='email' placeholder='Email' name='user-email' class="login__input">
+                        <input type='password' placeholder='Password' name='user-password' class="login__input">
+
+                        <input type='checkbox' id='#informed' class='login__check styled'>
+                        <label for='#informed' class='login__check-info'>remember me</label>
+                         </div>
+
+                        <div class="login__control">
+                            <button type='submit' class="btn btn-md btn--warning btn--wider">sign in</button>
+                            <a href="#" class="login__tracker form__tracker">Forgot password?</a>
+                        </div>
+                    </form>
+                </div>
+
+            </section>
+        </div>
+
+	<!-- JavaScript-->
+        <!-- jQuery 3.1.1-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/external/jquery-3.1.1.min.js"><\/script>')</script>
+        <!-- Migrate -->
+        <script src="js/external/jquery-migrate-1.2.1.min.js"></script>
+        <!-- jQuery UI -->
+        <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <!-- Bootstrap 3-->
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+        <!-- Mobile menu -->
+        <script src="js/jquery.mobile.menu.js"></script>
+         <!-- Select -->
+        <script src="js/external/jquery.selectbox-0.2.min.js"></script>
+        <!-- Stars rate -->
+        <script src="js/external/jquery.raty.js"></script>
+        <!-- Swiper slider -->
+        <script src="js/external/idangerous.swiper.min.js"></script>
+        <!-- Magnific-popup -->
+        <script src="js/external/jquery.magnific-popup.min.js"></script>
+        <!--*** Google map  ***-->
+        <script src="https://maps.google.com/maps/api/js?sensor=true"></script>
+        <!--*** Google map infobox  ***-->
+        <script src="js/external/infobox.js"></script>
+        <!-- Form element -->
+        <script src="js/external/form-element.js"></script>
+        <!-- Form validation -->
+        <script src="js/form.js"></script>
+        <!-- Custom -->
+        <script src="js/custom.js"></script>
+
+		<script type="text/javascript">
+            $(document).ready(function() {
+                init_MoviePage();
+                 init_MoviePageFull();
+            });
+		</script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+{% extends 'layout.html' %}
+{% import "slider.html" as slider %}
+{% block body %}
+    <div class="wrapper">
+        <!-- Banner -->
+         <div class="banner-top">
+            <img alt='top banner' src="images/banner_encabezado.png">
+        </div> 
+
+        <!-- Header section -->
+        <header class="header-wrapper header-wrapper--home">
+            <div class="container">
+                <!-- Logo link-->
+                <a href='index.html' class="logo">
+                    <img alt='logo' src="images/logo.png">
+                </a>
+
+                <!-- Main website navigation-->
+                <nav id="navigation-box">
+                    <!-- Toggle for mobile menu mode -->
+                    <a href="#" id="navigation-toggle">
+                        <span class="menu-icon">
+                            <span class="icon-toggle" role="button" aria-label="Toggle Navigation">
+                              <span class="lines"></span>
+                            </span>
+                        </span>
+                    </a>
+
+                    <!-- Link navigation -->
+                    <ul id="navigation">
+
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+<!-- Index slider -->
+{{ slider.slider() }}
+
+        <!-- Main content -->
+        <section class="container">
+            <div class="movie-best">
+                 <div class="col-sm-10 col-sm-offset-1 movie-best__rating">Today Best choice</div>
+                 <div class="col-sm-12 change--col">
+
+					<!-- selection of 6 movies by personal preference -->
+             		{% for i in range(0, bestChoice.length) %}
+                     <div class="movie-beta__item ">
+                        <img alt='' src="{{bestChoice[i].large_cover_image}}">
+                         <span class="best-rate">{{bestChoice[i].rating}}</span>
+                         <ul class="movie-beta__info">
+                             <li><span class="best-voted"></span></li>
+                             <li>
+                                <p class="movie__time">{{bestChoice[i].runtime}}</p>
+                                <p>{{bestChoice[i].genres}} </p>
+                                <p>{{bestChoice[i].rating}} rating</p>
+                             </li>
+                             <li class="last-block">
+                                 <a href="{{bestChoice[i].id}}" class="slide__link">more</a>
+                             </li>
+                         </ul>
+                     </div>
+					{% endfor %}                    
+                 </div>
+                <div class="col-sm-10 col-sm-offset-1 movie-best__check">check all movies now playing</div>
+            </div>
+            <div class="col-sm-12">
+                <div class="mega-select-present mega-select-top mega-select--full">
+                    <div class="mega-select-marker">
+                        <div class="marker-indecator location">
+                            <p class="select-marker"><span>Look for that movie</span> <br>you love</p>
+                        </div>
+                    </div>
+                      <div class="mega-select pull-right">
+                          <span class="mega-select__point">Search by</span>
+                          <ul class="mega-select__sort">
+                              <li class="filter-wrap"><a href="#" class="mega-select__filter filter--active" data-filter='location'>Movie</a></li>
+                          </ul>
+                      	<form action="/movieSearch">
+                          <input name="searchInput" type='text' class="select__field">
+                          
+                          <div class="select__btn">
+                            <input type="submit" value="find movies" class="btn btn-md btn--danger location"> <span class="hidden-exrtasm"></span></a>
+                          </div>
+                     	</form>
+                      </div>
+                  </div>
+            </div>
+            <div class="clearfix"></div>
+            <h2 id='target' class="page-heading heading--outcontainer">Now in the cinema</h2>
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-md-12">
+
+            		<!-- 20 most recent movies by year in descending order -->
+                    {% for i in range(0, orderBy.length) %}
+                        {% if i % 4 == 0 or i % 4 == 1 %}
+						 <div class="movie movie--test movie--test--dark movie--test--left"> 				
+						{% else %}
+						<div class="movie movie--test movie--test--dark movie--test--right">
+						{% endif %}
+                                <div class="movie__images">
+                                    <a href="{{orderBy[i].id}}" class="movie-beta__link">
+                                        <img alt='' src="{{orderBy[i].large_cover_image}}">
+                                    </a>
+                                </div>
+                                <div class="movie__info">
+                                    <a href='movie-page-full.html' class="movie__title">{{orderBy[i].title}} {{orderBy[i].year}} </a>
+
+                                    <p class="movie__time">{{orderBy[i].runtime}}</p>
+
+                                    <p class="movie__option"><a href="#">{{orderBy[i].genres[0]}}</a> | <a href="#">{{orderBy[i].genres[1]}}</a> | <a href="#">{{orderBy[i].genres[2]}}</a></p>
+
+                                    <div class="movie__rate">
+                                        <div class="score"></div>
+                                        <span class="movie__rating">{{orderBy[i].rating}}</span>
+                                    </div>
+                                </div>
+                            </div>
+					{% endfor %}
+
+					<!-- Movie variant with time -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="clearfix"></div>
+        <footer class="footer-wrapper">
+            <section class="container">
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="#" class="nav-link__item">Cities</a></li>
+                        <li><a href="movie-list-full.html" class="nav-link__item">Movies</a></li>
+                        <li><a href="trailer.html" class="nav-link__item">Trailers</a></li>
+                        <li><a href="rates-full.html" class="nav-link__item">Rates</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="coming-soon.html" class="nav-link__item">Coming soon</a></li>
+                        <li><a href="cinema-list.html" class="nav-link__item">Cinemas</a></li>
+                        <li><a href="offers.html" class="nav-link__item">Best offers</a></li>
+                        <li><a href="news-full.html" class="nav-link__item">News</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-4 col-md-2 footer-nav">
+                    <ul class="nav-link">
+                        <li><a href="#" class="nav-link__item">Terms of use</a></li>
+                        <li><a href="gallery-four.html" class="nav-link__item">Gallery</a></li>
+                        <li><a href="contact.html" class="nav-link__item">Contacts</a></li>
+                        <li><a href="page-elements.html" class="nav-link__item">Shortcodes</a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                    <div class="footer-info">
+                        <p class="heading-special--small">A.Movie<br><span class="title-edition">in the social media</span></p>
+                        <div class="social">
+                            <a href='#' class="social__variant fa fa-facebook"></a>
+                            <a href='#' class="social__variant fa fa-twitter"></a>
+                            <a href='#' class="social__variant fa fa-vk"></a>
+                            <a href='#' class="social__variant fa fa-instagram"></a>
+                            <a href='#' class="social__variant fa fa-tumblr"></a>
+                            <a href='#' class="social__variant fa fa-pinterest"></a>
+                        </div>
+                        <div class="clearfix"></div>
+                        <p class="copy">&copy; A.Movie, 2013. All rights reserved. Done by Olia Gozha</p>
+                    </div>
+                </div>
+            </section>
+        </footer>
+    </div>
+
+    <!-- open/close -->
+        <div class="overlay overlay-hugeinc">
+            <section class="container">
+                <div class="col-sm-4 col-sm-offset-4">
+                    <button type="button" class="overlay-close">Close</button>
+                    <form id="login-form" class="login" method='get' novalidate=''>
+                        <p class="login__title">sign in <br><span class="login-edition">welcome to A.Movie</span></p>
+                        <div class="social social--colored">
+                                <a href='#' class="social__variant fa fa-facebook"></a>
+                                <a href='#' class="social__variant fa fa-twitter"></a>
+                                <a href='#' class="social__variant fa fa-tumblr"></a>
+                        </div>
+                        <p class="login__tracker">or</p>
+                        <div class="field-wrap">
+                        <input type='email' placeholder='Email' name='user-email' class="login__input">
+                        <input type='password' placeholder='Password' name='user-password' class="login__input">
+                        <input type='checkbox' id='#informed' class='login__check styled'>
+                        <label for='#informed' class='login__check-info'>remember me</label>
+                     	</div>
+                        <div class="login__control">
+                            <button type='submit' class="btn btn-md btn--warning btn--wider">sign in</button>
+                            <a href="#" class="login__tracker form__tracker">Forgot password?</a>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+{% endblock %}
+
